@@ -6,25 +6,32 @@ import { useSelector } from "react-redux";
 
 export const AppSidebarNav = ({ items }) => {
   const location = useLocation();
-  const navLink = (name, icon, badge) => {
-    return (
-      <>
-        {icon && icon}
-        {name && name}
-        {badge && (
-          <CBadge color={badge.color} className="ms-auto">
-            {badge.text}
-          </CBadge>
-        )}
-      </>
-    );
-  };
+
+  const navLink = (name, icon, badge) => (
+    <>
+      {icon && icon}
+      {name && name}
+      {badge && (
+        <CBadge color={badge.color} className="ms-auto">
+          {badge.text}
+        </CBadge>
+      )}
+    </>
+  );
 
   const user = useSelector((state) => state.user);
-  const navItem = (item, index) => {
-    const { component, name, badge, icon, ...rest } = item;
+
+  const renderNavItem = (item, index) => {
+    let { component, name, badge, icon, ...rest } = item;
     const Component = component;
-    if (!user && (name === "Add Events" || name === "Add participants")) return;
+
+    console.log(rest);
+    if (!user && (name === "Add Events" || name === "Add participants"))
+      return null;
+    if (!user && name === "Logout") {
+      rest.to = "/login";
+      name = "Login";
+    }
     return (
       <Component
         {...(rest.to &&
@@ -38,31 +45,34 @@ export const AppSidebarNav = ({ items }) => {
       </Component>
     );
   };
-  const navGroup = (item, index) => {
+
+  const renderNavGroup = (item, index) => {
     const { component, name, icon, to, ...rest } = item;
     const Component = component;
+
     return (
       <Component
-        idx={String(index)}
         key={index}
         toggler={navLink(name, icon)}
         visible={location.pathname.startsWith(to)}
         {...rest}
       >
-        {item.items?.map((item, index) =>
-          item.items ? navGroup(item, index) : navItem(item, index)
+        {item.items?.map((subItem, subIndex) =>
+          subItem.items
+            ? renderNavGroup(subItem, subIndex)
+            : renderNavItem(subItem, subIndex)
         )}
       </Component>
     );
   };
 
   return (
-    <React.Fragment>
+    <>
       {items &&
         items.map((item, index) =>
-          item.items ? navGroup(item, index) : navItem(item, index)
+          item.items ? renderNavGroup(item, index) : renderNavItem(item, index)
         )}
-    </React.Fragment>
+    </>
   );
 };
 

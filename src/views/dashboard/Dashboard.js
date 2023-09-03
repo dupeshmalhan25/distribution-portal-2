@@ -30,18 +30,18 @@ const Dashboard = () => {
       <table>
         <tr>
           <th>Society Name</th>
-          <th>Event Name</th>
-          <th>No. of Participants</th>
-          <th>Date</th>
+          <th style={{ paddingLeft: 200 }}>Event Name</th>
+          <th style={{ paddingLeft: 200 }}>No. of Participants</th>
+          <th style={{ paddingLeft: 220 }}>Date</th>
         </tr>
         {events.map(({ name, date, society }) => (
           <tr>
-            <td>{society}</td>
-            <td>{name}</td>
-            <td>
+            <td style={{ paddingLeft: 30 }}>{society}</td>
+            <td style={{ paddingLeft: 200 }}>{name}</td>
+            <td style={{ paddingLeft: 250 }}>
               {user?.filter((user) => user.eventParticipated === name)?.length}
             </td>
-            <td>{date}</td>
+            <td style={{ paddingLeft: 200 }}>{date}</td>
           </tr>
         ))}
       </table>

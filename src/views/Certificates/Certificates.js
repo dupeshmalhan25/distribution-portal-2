@@ -93,14 +93,36 @@ function Certificates() {
         {userArray?.length > 0 && <h2>Certificates</h2>}
         {userArray?.length > 0 &&
           userArray.map((user, index) => (
-            <CCol xs={12}>
-              <h4>
-                {index}. Event Name:{" "}
-                {user.eventParticipated.toLocaleUpperCase()}
-              </h4>
-              <h5>Position attained:{user.position}</h5>
+            <>
+              <CCol xs={12}>
+                <div
+                  style={{
+                    backgroundImage: `url("/certificate.png")`,
+                    backgroundPosition: "center",
+                    position: "relative",
+                    height: 600,
+                    width: 1200,
+                    backgroundSize: "contain",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                >
+                  <h4 style={{ position: "absolute", top: 410, left: 550 }}>
+                    {user.eventParticipated.toLocaleUpperCase()}
+                  </h4>
+                  <h5 style={{ position: "absolute", top: 300, left: 540 }}>
+                    {user.name}
+                  </h5>
+                  <h5 style={{ position: "absolute", top: 480, left: 750 }}>
+                    {user.position}
+                  </h5>
+                  <h5 style={{ position: "absolute", top: 480, left: 350 }}>
+                    {user.date}
+                  </h5>
+                  <br />
+                </div>
+              </CCol>
               <br />
-            </CCol>
+            </>
           ))}
       </CCol>
       <CCol xs={12}>

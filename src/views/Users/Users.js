@@ -82,14 +82,6 @@ function Event() {
           </option>
           {society?.length &&
             society?.map((society) => <option>{society}</option>)}
-          {/* <option>SCIE</option>
-          <option>CSI</option>
-          <option>ISTE</option>
-          <option>Cultural Committee</option>
-          <option>Radio</option>
-          <option>CML</option>
-          <option>NSS</option>
-          <option>NCC</option> */}
         </CFormSelect>
         <CFormFeedback invalid>Select type of the Event.</CFormFeedback>
       </CCol>
@@ -100,7 +92,14 @@ function Event() {
         <CFormSelect
           id="validationCustom04"
           onChange={(e) => {
-            setUserData({ ...userData, eventParticipated: e.target.value });
+            const eventData = eventArray.filter(
+              (event) => event.name === e.target.value
+            );
+            setUserData({
+              ...userData,
+              date: eventData[0].date,
+              eventParticipated: e.target.value,
+            });
           }}
         >
           <option disabled selected>
@@ -183,6 +182,18 @@ function Event() {
           required
           onChange={(e) => {
             setUserData({ ...userData, branch: e.target.value });
+          }}
+        />
+        <CFormFeedback invalid>Please provide a valid Branch.</CFormFeedback>
+      </CCol>
+      <CCol md={12}>
+        <CFormLabel htmlFor="validationCustom05">Position</CFormLabel>
+        <CFormInput
+          type="text"
+          id="validationCustom05"
+          required
+          onChange={(e) => {
+            setUserData({ ...userData, position: e.target.value });
           }}
         />
         <CFormFeedback invalid>Please provide a valid Branch.</CFormFeedback>
